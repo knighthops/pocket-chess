@@ -1,7 +1,7 @@
 // Offline support for the home-screen app: keep the app's files on the device and serve them with no internet.
 // The build stamps VERSION; a new upload gets a new cache and the old one is removed.
 // A new version takes over straight away (skipWaiting + claim); sw-register.js then reloads the page into it.
-const VERSION='pc-6b1ac0719c';
+const VERSION='pc-8590b2700b';
 const FILES=['./','index.html','manifest.webmanifest','icon-180.png','icon-192.png','icon-512.png'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(VERSION).then(c=>c.addAll(FILES.map(f=>new Request(f,{cache:'reload'})))).then(()=>self.skipWaiting()));});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==VERSION).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});
